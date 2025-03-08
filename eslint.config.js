@@ -59,7 +59,7 @@ export default defineConfigWithVueTs(
         functions: 'never',
       }],
       '@stylistic/js/keyword-spacing': ['error', { before: true }],
-      '@stylistic/max-len': ['error', { code: 140, ignoreTemplateLiterals: true, ignoreStrings: true }],
+      '@stylistic/max-len': ['warn', { code: 140, ignoreTemplateLiterals: true, ignoreStrings: true }],
       '@stylistic/linebreak-style': 'off',
       '@stylistic/js/no-confusing-arrow': 'error',
       '@stylistic/js/no-extra-parens': 'error',
