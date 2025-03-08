@@ -1,16 +1,16 @@
 import pluginVue from 'eslint-plugin-vue';
-import vueTsEslintConfig from '@vue/eslint-config-typescript';
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript';
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin-js';
 import filenameRules from 'eslint-plugin-filename-rules';
 
-export default tseslint.config(
+export default defineConfigWithVueTs(
   eslint.configs.recommended,
-  ...tseslint.configs.strict,
-  ...tseslint.configs.stylistic,
   ...pluginVue.configs['flat/recommended'],
-  ...vueTsEslintConfig(),
+  vueTsConfigs.recommended,
 
   {
     name: 'app/files-to-lint',
@@ -150,24 +150,4 @@ export default tseslint.config(
       '@stylistic/js/indent': ['off'],
     }
   },
-
-  {
-    files: ['**/*.ts', '**/*.vue'],
-    rules: {
-
-      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true
-        }
-      ],
-    }
-  }
 );
