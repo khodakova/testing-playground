@@ -9,6 +9,9 @@ const RESPONSE_MESSAGES = {
   SUCCESS:  'Обновление выполнено успешно',
 };
 
+/**
+ * Получаем ответ для сообщения из статуса
+ */
 function getQueryResultMessage (response: {status: string}) {
   if (response.status !== 'SUCCESS') {
     throw new Error(RESPONSE_MESSAGES.ERROR);

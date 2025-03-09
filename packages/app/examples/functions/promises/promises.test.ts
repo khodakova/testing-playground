@@ -10,7 +10,8 @@ import {
 function createPromise (res: boolean) {
   return new Promise((resolve, reject) => {
     if (res) resolve('success');
-    reject(new Error('failure'));
+    reject('failure');
+    // reject(new Error('failure'));
   });
 }
 
@@ -23,15 +24,15 @@ describe('Тестирование промисов', () => {
     });
 
     // https://vitest.dev/api/expect.html#resolves
-    test('С помощью resolves', () => {
-      expect(createPromise(true)).resolves.toBe('success');
+    test('С помощью resolves', async () => {
+      await expect(createPromise(true)).resolves.toBe('success');
     });
   });
 
   describe('Проверка провального ответа', () => {
     // https://vitest.dev/api/expect.html#rejects
-    test('С помощью rejects - правильный вариант', () => {
-      expect(createPromise(false)).rejects.toThrowError('failure');
+    test('С помощью rejects - правильный вариант', async () => {
+      await expect(createPromise(false)).rejects.toThrowError('failure');
     });
   });
 });
