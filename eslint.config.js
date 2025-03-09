@@ -99,6 +99,11 @@ export default defineConfigWithVueTs(
   },
 
   {
+    files: ['**/*.vue', '**/*.ts'],
+    rules: { '@typescript-eslint/no-explicit-any': ['off'], }
+  },
+
+  {
     files: ['**/*.vue'],
     rules: {
       'vue/script-indent': ['error', 2, { baseIndent: 1 }],
