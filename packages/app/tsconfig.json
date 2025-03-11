@@ -10,5 +10,15 @@
     {
       "path": "./tsconfig.vitest.json"
     }
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src",
+    "examples",
+    "env.d.ts"
   ]
 }
