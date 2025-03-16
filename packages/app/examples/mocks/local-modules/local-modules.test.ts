@@ -4,7 +4,7 @@ import {
 import { anyFunc } from './any-func';
 
 /**
- * Мок локального модуля
+ * ВЕРХНЕУРОВНЕВЫЙ Мок локального модуля - весь экспортируемый функционал мокается
  *
  * можно также использовать абсолютные пути (@/shared/lib/auth/redirect-to-auth.ts)
  *
@@ -29,10 +29,12 @@ describe('', () => {
   });
 
   test('Локальный модуль мокает значение', () => {
-    vi.mocked(anyFunc).mockReturnValueOnce(true);
+    vi.mocked(anyFunc).mockReturnValue(true);
+
     expect(localModules()).toBe('true');
 
-    vi.mocked(anyFunc).mockReturnValueOnce(false);
+    vi.mocked(anyFunc).mockReturnValue(false);
+
     expect(localModules()).toBe('false');
   });
 
@@ -40,5 +42,6 @@ describe('', () => {
     localModules();
 
     expect(anyFunc).toHaveBeenCalledOnce();
+
   });
 });

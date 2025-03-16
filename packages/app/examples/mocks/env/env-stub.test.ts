@@ -4,6 +4,7 @@ import {
 
 const fnWithEnv = () => {
   if (import.meta.env.MODE === 'prod') {
+    // любые действия
     return 'THIS IS PROD ENVIRONMENT';
   }
   return 'THIS IS DEV';
