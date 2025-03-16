@@ -14,20 +14,26 @@ import { anyFunc } from './any-func';
 vi.mock('./any-func.ts');
 // ==================== MOCKS ====================
 
-const localModules = anyFunc;
+const localModules = () => {
+  if (anyFunc()) {
+    return 'true';
+  } else {
+    return 'false';
+  }
+};
 
-describe('CheckUserAuth', () => {
+describe('', () => {
   afterEach(() => {
     // не забываем очищать моки. Можем очистить сразу все моки
     vi.clearAllMocks();
   });
 
   test('Локальный модуль мокает значение', () => {
-    vi.mocked(anyFunc).mockReturnValueOnce('test');
-    expect(localModules()).toBe('test');
+    vi.mocked(anyFunc).mockReturnValueOnce(true);
+    expect(localModules()).toBe('true');
 
-    vi.mocked(anyFunc).mockReturnValueOnce('test1');
-    expect(localModules()).toBe('test1');
+    vi.mocked(anyFunc).mockReturnValueOnce(false);
+    expect(localModules()).toBe('false');
   });
 
   test('Вызов локального модуля отслеживается', () => {

@@ -15,7 +15,6 @@ const mocks = vi.hoisted(() => ({
   validate: vi.fn().mockImplementation(() => ({
     isValid: false,
     errors: [{}],
-    getErrorByKey: vi.fn().mockReturnValue('')
   }))
 }));
 
@@ -37,7 +36,6 @@ describe('test', () => {
     mocks.validate.mockImplementationOnce(() => ({
       isValid: true,
       errors: [],
-      getErrorByKey: vi.fn().mockReturnValue('')
     }));
     const res = validate();
 

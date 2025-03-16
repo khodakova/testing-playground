@@ -2,7 +2,12 @@ import {
   expect, test, vi, describe, afterEach
 } from 'vitest';
 
-const fnWithEnv = () => import.meta.env.MODE;
+const fnWithEnv = () => {
+  if (import.meta.env.MODE === 'prod') {
+    return 'THIS IS PROD ENVIRONMENT';
+  }
+  return 'THIS IS DEV';
+};
 
 /**
  * Если есть необходимость проверять код, зависящий от переменных окружения, vitest предоставляет такую возможность
@@ -18,9 +23,9 @@ describe('', () => {
 
   test('Возвращается застабленная переменная окружения', () => {
     vi.stubEnv('MODE', 'development');
-    expect(fnWithEnv()).toBe('development');
+    expect(fnWithEnv()).toBe('THIS IS DEV');
 
     vi.stubEnv('MODE', 'prod');
-    expect(fnWithEnv()).toBe('prod');
+    expect(fnWithEnv()).toBe('THIS IS PROD ENVIRONMENT');
   });
 });
