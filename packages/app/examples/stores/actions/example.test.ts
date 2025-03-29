@@ -46,7 +46,7 @@ export const exampleStore = defineStore(EXAMPLE, () => {
       });
   }
 
-  /** Примет метода, который в процессе выполнения может пробросить ошибку */
+  /** Пример метода, который в процессе выполнения может пробросить ошибку */
   async function saveWithError () {
     await $axios.post<string>('test')
       .catch((err: AxiosError) => {
@@ -74,10 +74,12 @@ function createTestedStore () {
 // ===================================== MOCKS =====================================
 // мокаем роутер и уведомления, чтобы отследить вызов
 vi.mock('vue3-toastify');
+
 const routerMock = new VueRouterMock();
 vi.mock('vue-router');
 vi.mocked(useRouter).mockReturnValue(routerMock.router);
 vi.mocked(useRoute).mockReturnValue(routerMock.route);
+
 // ===================================== MOCKS =====================================
 
 /**
@@ -121,6 +123,7 @@ describe('saveData', () => {
     });
 
     test('Происходит переход по роутам', async () => {
+      console.log(routerMock);
       const pushSpy = vi.spyOn(routerMock.router, 'push');
       await sut.saveData();
 

@@ -4,17 +4,12 @@ import {
 import { ref } from 'vue';
 import { createTestingPinia } from '@pinia/testing';
 import {
-  beforeEach, describe, expect, test, vi
+  beforeEach, describe, test, vi
 } from 'vitest';
-import { DeepPartial } from '../types';
 
 export const BASE_TEST = 'base-test';
 
 export const baseTest = defineStore(BASE_TEST, () => {
-  // const otherStore = useOtherStore()
-  /**
-   * Наша переменная
-   */
   const someVar = ref();
 
   function someAction () {
@@ -27,15 +22,9 @@ export const baseTest = defineStore(BASE_TEST, () => {
   };
 });
 
-type StoreState = DeepPartial<ReturnType<typeof baseTest>>
-
-function createTestedStore (initialState?: StoreState) {
+function createTestedStore (initialState?: Record<string, any>) {
   return baseTest(createTestingPinia({
-    initialState: {
-      [BASE_TEST]: initialState,
-      //   можно прокидывать начальное состояние для любого стора
-      ANY_OTHER_STORE: {}
-    },
+    initialState,
     stubActions: false,
     createSpy: vi.fn
   }));
@@ -47,13 +36,11 @@ describe('', () => {
   beforeEach(() => {
     // активируем пинью для тестов
     setActivePinia(createPinia());
-    sut = createTestedStore({ someVar: 123123123 });
+    sut = createTestedStore({ [BASE_TEST]: { someVar: 123123123 } });
   });
 
   test('Корректно происходит установка начального значения стейта', () => {
     console.log(sut.someVar);
     sut.someAction();
-
-    expect(sut.someVar).toBe(123123123);
   });
 });

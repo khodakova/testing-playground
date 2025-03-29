@@ -2,13 +2,13 @@ import {
   defineStore, createPinia, setActivePinia
 } from 'pinia';
 import {
-  afterEach, beforeEach, expect, test, vi, describe
+  afterEach, beforeEach, test, vi, describe, expect
 } from 'vitest';
 import { ref, watch } from 'vue';
-import { flushPromises } from '@vue/test-utils';
-import { mockAxios } from '../../../test-setup';
 import { createTestingPinia } from '@pinia/testing';
 import { $axios } from '../../../__mocks__/config';
+import { mockAxios } from '../../../test-setup';
+import { flushPromises } from '@vue/test-utils';
 
 export const AXIOS_TEST = 'axios-test';
 const TESTED_URL = 'test';
@@ -35,7 +35,6 @@ const testedStore = axiosTest;
 
 function createTestedStore () {
   return testedStore(createTestingPinia({
-    initialState: { [AXIOS_TEST]: { } },
     stubActions: false,
     createSpy: vi.fn,
   }));
@@ -50,9 +49,8 @@ describe('axios', () => {
   const response = { test: 'test' };
 
   beforeEach(() => {
-    // мокаем необходимый запрос до вызова метода, который его дергает
-    // если его не замокать, будет возвращена ошибка
-    mockAxios.onGet(TESTED_URL).reply(200, response);
+    // не забыть замокать эндпойнт, к которому будет произведено обращение!
+    mockAxios.onGet(TESTED_URL).replyOnce(200, response);
     setActivePinia(createPinia());
     sut = createTestedStore();
   });
@@ -70,10 +68,8 @@ describe('axios', () => {
 
   test('При изменении пагинации выполняется запрос', async () => {
     sut.page = 500;
-    // необходимо вызвать flushPromises, чтобы все необходимые промисы были "выполнены" в среде теста
     await flushPromises();
 
-    // проверяем, что запрос был выполнен
     expect(mockAxios.history.get.filter((x) => x.url === TESTED_URL)).toHaveLength(1);
   });
 });
