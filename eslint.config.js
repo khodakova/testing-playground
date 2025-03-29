@@ -151,6 +151,7 @@ export default defineConfigWithVueTs(
       }],
       'vue/attribute-hyphenation': ['error', 'never', { ignore: [], }],
       'vue/no-v-for-template-key': 'off',
+      'vue/multi-word-component-names': 'off',
 
       '@stylistic/js/indent': ['off'],
     }
