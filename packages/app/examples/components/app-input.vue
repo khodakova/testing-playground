@@ -15,7 +15,7 @@
 
   watch(_value, () => {
     emit('update:modelValue', _value.value);
-  }, { immediate: true });
+  });
 </script>
 
 <template>

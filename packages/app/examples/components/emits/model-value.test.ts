@@ -2,9 +2,9 @@ import { mount } from '@vue/test-utils';
 import {
   afterEach, describe, expect, test,
 } from 'vitest';
-import ModelValue from './model-value.vue';
+import SomeForm from '../some-form.vue';
 
-const Component = ModelValue;
+const Component = SomeForm;
 type Props = InstanceType<typeof Component>['$props']
 
 function createWrapper (props?: Props) {
@@ -19,26 +19,25 @@ describe('', () => {
   });
 
   test('Смена modelValue порождает эмит на изменение формы', async () => {
-    sut = createWrapper({ });
+    sut = createWrapper({ submitImmediately: true });
 
-    sut.getByDataTest('input1').getComponent({ name: 'AppInput' }).setValue('test');
-    await sut.vm.$nextTick();
+    await sut.getByDataTest('input1').getComponent({ name: 'AppInput' }).setValue('test');
 
-    expect(sut.emitted('changeForm')).toBeDefined();
+    expect(sut.emitted('submit')).toBeDefined();
   });
 
   test('Смена modelValue порождает эмит на изменение формы', async () => {
-    sut = createWrapper({ });
+    sut = createWrapper({ submitImmediately: true });
 
     sut.getByDataTest('input1').getCurrentComponent().emit('update:modelValue', 'test');
     await sut.vm.$nextTick();
 
-    expect(sut.emitted('changeForm')).toBeDefined();
+    expect(sut.emitted('submit')).toBeDefined();
   });
 
   test('Изначально изменений формы не инициализируется', async () => {
-    sut = createWrapper({ });
+    sut = createWrapper({ submitImmediately: true });
 
-    expect(sut.emitted('changeForm')).toBeUndefined();
+    expect(sut.emitted('submit')).toBeUndefined();
   });
 });
